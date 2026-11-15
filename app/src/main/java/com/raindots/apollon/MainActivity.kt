@@ -1,3 +1,4 @@
+
 package com.raindots.apollon
 
 import android.app.Activity
@@ -17,62 +18,56 @@ class MainActivity : Activity() {
         }
 
         val title = TextView(this).apply {
-            text = "NETHER EXPLORER"
+            text = "STRUCTURE FINDER"
             textSize = 25f
             setTextColor(Color.WHITE)
             gravity = Gravity.CENTER
         }
 
-        val overworldX = EditText(this).apply {
-            hint = "Overworld X"
-            inputType = 2
-        }
+        val structures = arrayOf(
+            "Village",
+            "Ancient City",
+            "Stronghold",
+            "Nether Fortress",
+            "Bastion Remnant",
+            "Woodland Mansion",
+            "Ocean Monument"
+        )
 
-        val overworldZ = EditText(this).apply {
-            hint = "Overworld Z"
-            inputType = 2
-        }
-
-        val result = TextView(this).apply {
-            text = "Nether coordinates will appear here"
-            textSize = 18f
+        val info = TextView(this).apply {
+            text = "Choose a structure to learn about it."
+            textSize = 17f
             setTextColor(Color.WHITE)
+            setPadding(8, 24, 8, 24)
         }
 
-        val calculate = Button(this).apply {
-            text = "Convert Coordinates"
-            setOnClickListener {
-                val x = overworldX.text.toString().toDoubleOrNull()
-                val z = overworldZ.text.toString().toDoubleOrNull()
+        val selector = Spinner(this).apply {
+            adapter = ArrayAdapter(
+                this@MainActivity,
+                android.R.layout.simple_spinner_dropdown_item,
+                structures
+            )
+        }
 
-                if (x != null && z != null) {
-                    result.text = "Nether X: ${x / 8}\nNether Z: ${z / 8}"
-                } else {
-                    result.text = "Enter valid X and Z coordinates."
+        val showInfo = Button(this).apply {
+            text = "Show Information"
+            setOnClickListener {
+                info.text = when (selector.selectedItem.toString()) {
+                    "Village" -> "Explore plains, deserts, savannas and snowy biomes."
+                    "Ancient City" -> "Search deep underground in the Deep Dark biome. Watch out for the Warden."
+                    "Stronghold" -> "Use Eyes of Ender to locate a stronghold and its End Portal."
+                    "Nether Fortress" -> "Explore the Nether. Look for dark brick bridges and blaze spawners."
+                    "Bastion Remnant" -> "Search the Nether for large blackstone structures. Beware of Piglin Brutes."
+                    "Woodland Mansion" -> "Explore dark forests. Bring strong armor and weapons."
+                    else -> "Search deep ocean biomes. Watch out for Guardians."
                 }
             }
         }
 
-        val tips = TextView(this).apply {
-            text = """
-                NETHER SURVIVAL TIPS
-
-                • Bring fire resistance potions.
-                • Carry gold armor.
-                • Watch out for lava.
-                • Mark your portal coordinates.
-                • Look for fortresses for blaze rods.
-            """.trimIndent()
-            textSize = 17f
-            setTextColor(Color.WHITE)
-        }
-
         layout.addView(title)
-        layout.addView(overworldX)
-        layout.addView(overworldZ)
-        layout.addView(calculate)
-        layout.addView(result)
-        layout.addView(tips)
+        layout.addView(selector)
+        layout.addView(showInfo)
+        layout.addView(info)
 
         setContentView(layout)
     }
