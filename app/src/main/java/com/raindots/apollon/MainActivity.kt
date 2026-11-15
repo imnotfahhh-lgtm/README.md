@@ -14,26 +14,36 @@ class MainActivity : Activity() {
         val layout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.CENTER
-            setPadding(32, 32, 32, 32)
-            setBackgroundColor(Color.rgb(18, 20, 28))
+            setPadding(24, 24, 24, 24)
+            setBackgroundColor(Color.rgb(15, 18, 28))
+        }
+
+        fun addButton(text: String) {
+            val button = TextView(this).apply {
+                this.text = text
+                textSize = 18f
+                setTextColor(Color.WHITE)
+                gravity = Gravity.CENTER
+                setPadding(20, 24, 20, 24)
+                setBackgroundColor(Color.rgb(35, 45, 65))
+            }
+            layout.addView(button)
         }
 
         val title = TextView(this).apply {
-            text = "Raindots Apollon"
-            textSize = 28f
+            text = "RAINDOTS APOLLON"
+            textSize = 26f
             setTextColor(Color.WHITE)
             gravity = Gravity.CENTER
         }
 
-        val subtitle = TextView(this).apply {
-            text = "Minecraft Bedrock 26.60 Companion"
-            textSize = 16f
-            setTextColor(Color.LTGRAY)
-            gravity = Gravity.CENTER
-        }
-
         layout.addView(title)
-        layout.addView(subtitle)
+        addButton("AI Companion")
+        addButton("Structure Finder")
+        addButton("Nether Explorer")
+        addButton("Coordinates Helper")
+        addButton("Survival Assistant")
+
         setContentView(layout)
     }
 }
