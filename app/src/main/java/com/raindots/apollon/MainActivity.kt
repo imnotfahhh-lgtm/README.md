@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.EditText
+import android.widget.Button
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,36 +15,45 @@ class MainActivity : Activity() {
 
         val layout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            gravity = Gravity.CENTER
             setPadding(24, 24, 24, 24)
             setBackgroundColor(Color.rgb(15, 18, 28))
         }
 
-        fun addButton(text: String) {
-            val button = TextView(this).apply {
-                this.text = text
-                textSize = 18f
-                setTextColor(Color.WHITE)
-                gravity = Gravity.CENTER
-                setPadding(20, 24, 20, 24)
-                setBackgroundColor(Color.rgb(35, 45, 65))
-            }
-            layout.addView(button)
-        }
-
         val title = TextView(this).apply {
-            text = "RAINDOTS APOLLON"
+            text = "APOLLON AI"
             textSize = 26f
             setTextColor(Color.WHITE)
             gravity = Gravity.CENTER
         }
 
+        val chat = TextView(this).apply {
+            text = "Apollon: Hey! Ready to explore Minecraft?"
+            textSize = 17f
+            setTextColor(Color.WHITE)
+            setPadding(12, 30, 12, 30)
+        }
+
+        val input = EditText(this).apply {
+            hint = "Ask Apollon..."
+            setTextColor(Color.WHITE)
+            setHintTextColor(Color.LTGRAY)
+        }
+
+        val send = Button(this).apply {
+            text = "Send"
+            setOnClickListener {
+                val question = input.text.toString()
+                if (question.isNotBlank()) {
+                    chat.text = "You: $question\n\nApollon: I'm here to help with Minecraft!"
+                    input.text.clear()
+                }
+            }
+        }
+
         layout.addView(title)
-        addButton("AI Companion")
-        addButton("Structure Finder")
-        addButton("Nether Explorer")
-        addButton("Coordinates Helper")
-        addButton("Survival Assistant")
+        layout.addView(chat)
+        layout.addView(input)
+        layout.addView(send)
 
         setContentView(layout)
     }
